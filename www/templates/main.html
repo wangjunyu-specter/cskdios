@@ -1,0 +1,30 @@
+<ion-view>
+    <ion-header-bar align-title="center" class="bar-positive my-top-nav" style="height: 70px;">
+                <label class="item item-input item-select" style="width: 100px;background: none;border: none;">
+                    <select style="background: none;padding:  0 33px 0 0;width: 100%;left: 0;max-width: none;">
+                        <option selected>拼车</option>
+                        <option>快车</option>
+                        <option>专车</option>
+                    </select>
+                </label>
+        <div class="title main-top-button">
+            <div><button>开始接单</button></div>
+        </div>
+    </ion-header-bar>
+    <ion-nav-view name="main"></ion-nav-view>
+
+    <div class="tabs tabs-icon-top main-footer-nav">
+        <a ng-class="{'tab-item':true,'active':nav1}" ng-click="fn1()" href="#/main/content">
+            <i class="icon ion-home"></i>
+            主页
+        </a>
+        <a ng-class="{'tab-item':true,'active':nav2}" ng-click="fn2()" href="#/main/shouru">
+            <i class="icon ion-social-yen"></i>
+            收入
+        </a>
+        <a ng-class="{'tab-item':true,'active':nav3}" ng-click="fn3()" href="#/main/center">
+            <i class="icon ion-android-person"></i>
+            我的
+        </a>
+    </div>
+</ion-view>

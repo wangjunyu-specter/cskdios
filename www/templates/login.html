@@ -1,0 +1,32 @@
+<ion-header-bar align-title="center" class="bar-positive">
+  <h1 class="title">城市快道</h1>
+</ion-header-bar>
+<ion-view>
+  <ion-content padding="true">
+    <form name="form" novalidate>
+      <div class="list">
+        <label class="item item-input">
+          <input type="text" name="uname" ng-model="user.uname" placeholder="用户名" required>
+          <span class="error" ng-show="form.uname.$touched && form.uname.$invalid">
+            <span ng-show="form.uname.$error.required">请输入用户名</span>
+          </span>
+        </label>
+        <label class="item item-input">
+          <input type="password" placeholder="密码" ng-minlength="6" ng-model="user.pwd" name="pwd" required>
+          <span class="error" ng-show="form.pwd.$touched && form.pwd.$invalid">
+            <span ng-show="form.pwd.$error.required">请输入密码</span>
+            <span ng-show="form.pwd.$error.minlength">请输入6位以上密码</span>
+          </span>
+        </label>
+        <ion-toggle ng-model="storage" toggle-class="toggle-calm">记住密码</ion-toggle>
+      </div>
+    </form>
+    <button class="button button-block button-assertive"
+            ng-disabled="form.uname.$invalid || form.pwd.$invalid"
+       ng-click="submit()">登陆</button>
+    <div class="row">
+      <div class="col"><a href="#/forgetpwd">忘记密码</a></div>
+      <div class="col text-right"><a href="#/register">注册账号</a></div>
+    </div>
+  </ion-content>
+</ion-view>

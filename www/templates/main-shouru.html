@@ -1,0 +1,36 @@
+<ion-view>
+    <ion-content style="margin-top: 30px;">
+        <div class="shouru-top-box">
+            <div class="title text-center">
+              <label class="item item-input item-select" style="height: 50px;width: 150px;left: 50%;margin-left: -75px;padding: 0;border: 0;background: none;">
+                <select style="max-width: none;background: none;" ng-model="data.select">
+                  <option selected>今日收入</option>
+                  <option>本周收入</option>
+                  <option>本月收入</option>
+                </select>
+              </label>
+            </div>
+            <div class="content text-center">${{data.price}}</div>
+            <div class="footer text-center" ng-if="data.select == '今日收入'">您本周一共完成了{{data.num}}单</div>
+            <div class="footer text-center" ng-if="data.select == '本周收入'">您本周一共完成了{{data.num}}单</div>
+            <div class="footer text-center" ng-if="data.select == '本月收入'">您本周一共完成了{{data.num}}单</div>
+        </div>
+        <div class="myline"></div>
+        <div class="shouru_title">
+          <i class="icon ion-card"></i>
+          今日收入详情
+        </div>
+        <div class="mylist">
+          <div class="box">
+            <div class="left">
+              上午8
+            </div>
+            <div class="right">拼车</div>
+          </div>
+          <div class="box">
+            <div class="left">乘客4</div>
+            <div class="right">152</div>
+          </div>
+        </div>
+    </ion-content>
+</ion-view>

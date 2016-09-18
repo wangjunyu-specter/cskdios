@@ -1,0 +1,21 @@
+<ion-view>
+    <ion-content style="margin-top: 40px;">
+        <div class="card main-top-card">
+            <div class="item item-text-wrap" style="border: none;">
+                今日收入:{{data.price}}<span>接单:{{data.num}}单</span>
+            </div>
+            <div class="item item-divider" style="border: none;">
+                在线时长：{{time}}分钟
+            </div>
+        </div>
+      <div class="main_line"></div>
+        <div class="card main-content-car">
+            <div class="item item text-wrap">
+                {{data.content}}
+            </div>
+            <div class="item item-divider">
+                <i class="icon ion-chatbubble-working" style="margin-right: 10px;"></i>今日{{data.time}}更新
+            </div>
+        </div>
+    </ion-content>
+</ion-view>
