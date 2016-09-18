@@ -3,33 +3,35 @@
         <div class="shouru-top-box">
             <div class="title text-center">
               <label class="item item-input item-select" style="height: 50px;width: 150px;left: 50%;margin-left: -75px;padding: 0;border: 0;background: none;">
-                <select style="max-width: none;background: none;" ng-model="data.select">
-                  <option selected>今日收入</option>
-                  <option>本周收入</option>
-                  <option>本月收入</option>
+                <select style="max-width: none;background: none;" ng-model="select.num">
+                  <option value="1">今日收入</option>
+                  <option value="2">本周收入</option>
+                  <option value="3">本月收入</option>
                 </select>
               </label>
             </div>
-            <div class="content text-center">${{data.price}}</div>
-            <div class="footer text-center" ng-if="data.select == '今日收入'">您本周一共完成了{{data.num}}单</div>
-            <div class="footer text-center" ng-if="data.select == '本周收入'">您本周一共完成了{{data.num}}单</div>
-            <div class="footer text-center" ng-if="data.select == '本月收入'">您本周一共完成了{{data.num}}单</div>
+            <div class="content text-center">${{data.money}}</div>
+            <div class="footer text-center" ng-if="select.num == '1'">您今日一共完成了{{data.num}}单</div>
+            <div class="footer text-center" ng-if="select.num == '2'">您本周一共完成了{{data.num}}单</div>
+            <div class="footer text-center" ng-if="select.num == '3'">您本月一共完成了{{data.num}}单</div>
         </div>
         <div class="myline"></div>
         <div class="shouru_title">
           <i class="icon ion-card"></i>
-          今日收入详情
+          <span ng-if="select.num ==1">今日收入</span>
+          <span ng-if="select.num ==2">本周收入</span>
+          <span ng-if="select.num ==3">本月收入</span>详情
         </div>
-        <div class="mylist">
+        <div class="mylist" ng-repeat="team in data.order">
           <div class="box">
             <div class="left">
-              上午8
+              {{ team.createtime | date : 'short'}}
             </div>
-            <div class="right">拼车</div>
+            <div class="right"><span ng-if="team.type == 'k'">快车</span><span ng-if="team.type == 'p'">拼车</span><span ng-if="team.type == 'z'">专车</span></div>
           </div>
           <div class="box">
             <div class="left">乘客4</div>
-            <div class="right">152</div>
+            <div class="right">{{ team.price }}</div>
           </div>
         </div>
     </ion-content>

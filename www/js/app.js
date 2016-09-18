@@ -7,7 +7,25 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
 
-.run(function($ionicPlatform) {
+.run(function($ionicPlatform,$rootScope,$http,$location,locals) {
+  var user = {};
+  user.uname = locals.get('loginname','');
+  user.pwd = locals.get('loginpwd','');
+  if(user.uname && user.pwd) {
+    $http.post('http://cskd.eltcn.cn/app/index.php?i=5&c=home&a=driver_user&event=login',{
+        user:user,
+      })
+      .success(function(data){
+        if(data.status == 0) {
+          sessionStorage.user = JSON.stringify(data.result);
+          $rootScope.token = data.token;
+          $location.path('/main/content')
+        }else
+        {
+          $location.path('/login')
+        }
+      })
+  }
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -21,6 +39,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       StatusBar.styleDefault();
     }
   });
+
 })
 
 .config(function($stateProvider, $urlRouterProvider) {
@@ -76,7 +95,15 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
         }
       }
     })
-
+    .state('main.center',{
+      url:'/center',
+      views:{
+        'main':{
+          templateUrl:'templates/center.html',
+          controller:'center'
+        }
+      }
+    })
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/login');
 

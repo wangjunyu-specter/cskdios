@@ -26,18 +26,20 @@ angular.module('starter.controllers', [])
     enableFriends: true
   };
 })
-    .controller('login', function($scope,$http,$ionicPopup,locals) {
+    .controller('login', function($scope,$http,$ionicPopup,$location,locals) {
       $scope.user = {};
       $scope.storage = true;
       $scope.submit = function () {
-        locals.get('loginname',$scope.user.uname);
+        locals.set('loginname',$scope.user.uname);
         $http.post('http://cskd.eltcn.cn/app/index.php?i=5&c=home&a=driver_user&event=login',{
           user:$scope.user,
         })
             .success(function(data){
               if(data.status == 0) {
-                if($scope.storage) locals.get('loginpwd',$scope.user.pwd);
+                if($scope.storage) locals.set('loginpwd',$scope.user.pwd);
                 sessionStorage.user = JSON.stringify(data.result);
+                $rootScope.token = data.token;
+                $location.path('/main/content')
               }else
               {
                 $scope.showAlert(data.result)
@@ -131,17 +133,66 @@ angular.module('starter.controllers', [])
       $scope.nav1 = false;
     }
   })
-.controller('maincontent',function($scope){
-    $scope.data = {};
-    $scope.data.price = '10';
-    $scope.data.num = '10';
-
-    $scope.data.content = '我是公告内容';
-    $scope.data.time = '10'
+.controller('maincontent',function($scope,$http,$rootScope,$ionicPopup){
+    $http.post('http://cskd.eltcn.cn/app/index.php?i=5&c=home&a=order2&event=nowOrder',{
+      token: $rootScope.token
+    })
+      .success(function(data){
+        if(data.status == 0) {
+          $scope.data = data.result;
+        }else {
+          $scope.showAlert(data.result)
+        }
+      })
+  // 一个提示对话框
+  $scope.showAlert = function(text) {
+    var alertPopup = $ionicPopup.alert({
+      title: '警告',
+      template: text
+    });
+    alertPopup.then(function(res) {
+      console.log('Thank you for not eating my delicious ice cream cone');
+    });
+  };
   })
-.controller('mainshouru',function($scope){
-    $scope.data={}
-    $scope.data.price = '10';
-    $scope.data.num = '10';
-    $scope.data.select = "本周收入"
+.controller('mainshouru',function($scope,$http,$rootScope,$ionicPopup){
+  $scope.select = {};
+  $scope.select.num = '1';
+    $scope.index = '1';
+  $scope.type = 't';
+  $scope.$watch('select.num',function(newVal,oldVal){
+    if(newVal == '1') $scope.type = 't';
+    if(newVal == '2') $scope.type = 'z';
+    if(newVal == '3') $scope.type = 'y';
+    if(newVal != oldVal) {
+      myhttp();
+    }
+  })
+   function myhttp() {
+     $http.post('http://cskd.eltcn.cn/app/index.php?i=5&c=home&a=order2&event=weekOrder',{
+         token: $rootScope.token,
+         type:$scope.type,
+         i:'1'
+       })
+       .success(function(data){
+         if(data.status == 0) {
+           $scope.data = data.result;
+         }else {
+           $scope.showAlert(data.result)
+         }
+       })
+   }
+  myhttp();
+  $scope.showAlert = function(text) {
+    var alertPopup = $ionicPopup.alert({
+      title: '警告',
+      template: text
+    });
+    alertPopup.then(function(res) {
+      console.log('Thank you for not eating my delicious ice cream cone');
+    });
+  };
+  })
+  .controller('center',function($scope){
+
   })
